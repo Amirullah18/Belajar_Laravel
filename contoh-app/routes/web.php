@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,10 +72,45 @@ Route::get('/about',
     [TokoController::class, 'about']);
 
 Route::get('/admin',
-    [TokoController::class, 'admin']);
-    
+    [TokoController::class, 'admin'])->name('produk.admin');
+
 Route::get('/customer',
-    [TokoController::class,'customer']);
+    [TokoController::class,'customer'])->name('customer.customer');
+
+Route::prefix('produk')->group(function () {
+    Route::get('create', 
+        [TokoController::class, 'create'])->name('produk.create');
+
+    Route::post('/', 
+        [TokoController::class, 'store'])->name('produk.store');
+
+    Route::get('/{product}/edit',
+    [TokoController::class, 'edit'])->name('produk.edit');
+
+    Route::delete('/{product}',
+    [TokoController::class, 'destroy'])->name('produk.destroy');
+
+    Route::put('/{product}',
+    [TokoController::class, 'update'])->name('produk.update');
+    });
+
+Route::prefix('customer')->group(function () {
+    Route::get('create',            
+        [TokoController::class, 'createC'  ])  ->name  ('customer.create');
+    Route::post('/',                
+
+        [TokoController::class, 'storeC'   ])  ->name  ('customer.store');
+
+    Route::get('/{customer}/edit',  
+        [TokoController::class, 'editC'    ])  ->name  ('customer.edit');
+
+    Route::delete('/{customer}',    
+        [TokoController::class, 'destroyC' ])  ->name  ('customer.destroy');
+        
+    Route::put('/{customer}',       
+        [TokoController::class, 'updateC'  ])  ->name  ('customer.update');
+    });
+
 });
 
 
